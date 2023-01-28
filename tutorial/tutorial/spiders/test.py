@@ -5,14 +5,24 @@ from scrapy.selector import Selector
 
 class QuotesScrollSpider(scrapy.Spider):
     name = 'scroll'
-
+    allowed_domains = ['protiger.com']    
+        
     def start_requests(self):
-        yield scrapy.Request(
-            url="http://quotes.toscrape.com/scroll",
-            meta={
+        
+          url="https://www.proptiger.com/mumbai/all-builders?page={}"
+          
+          for i in range(1,20):
+                    
+                yield scrapy.Request(
+                     
+                    url.format(i),       
+    
+                    meta={
                 "playwright": True,
                 "playwright_page_methods": [
-                    PageMethod("wait_for_selector", ".quote")
+                    PageMethod("wait_for_selector", ".js-disclaimer>.icon-new-close"),
+                    PageMethod("click",".js-disclaimer>.icon-new-close"),
+                    PageMethod("evaluate",("window.scrollTo(0,document.body.scrollHeight"))
                 ],
                 "playwright_include_page": True
             },
@@ -21,16 +31,12 @@ class QuotesScrollSpider(scrapy.Spider):
 
     async def parse(self, response):
         page = response.meta['playwright_page']
-        for i in range(2,11):  # 2 to 10
-            await page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
-            quotes_count = 10*i
-            await page.wait_for_selector(f'.quote:nth-child({quotes_count})')
         s  = Selector(text=await page.content())
         await page.close()
-        for q in s.css('.quote'):
+       
+        for q in s.css('.b-card'):
             yield {
-                'author': q.css('.author ::text').get(),
-                'quote': q.css('.text ::text').get()
+                'builders': q.css('.builder-exp-wrap>.builder-details-wrap ::text').get().strip(),               
             }
 
     async def close_page(self, failure):
