@@ -31,7 +31,7 @@ class QuotesScrollSpider(scrapy.Spider):
 
     async def parse(self, response):
            
-        for q in s.css('.b-card'):
+        for q in response.css('.b-card'):
             yield {
                 'builders': q.css('.builder-exp-wrap>.builder-details-wrap ::text').getall(),               
             }
