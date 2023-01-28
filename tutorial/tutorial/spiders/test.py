@@ -11,7 +11,7 @@ class QuotesScrollSpider(scrapy.Spider):
         
           url="https://www.proptiger.com/mumbai/all-builders?page={}"
           
-          for i in range(1,20):
+          for i in range(1,5):
                     
                 yield scrapy.Request(
                      
@@ -36,7 +36,7 @@ class QuotesScrollSpider(scrapy.Spider):
        
         for q in s.css('.b-card'):
             yield {
-                'builders': q.css('.builder-exp-wrap>.builder-details-wrap ::text').get().strip(),               
+                'builders': q.css('.builder-exp-wrap>.builder-details-wrap ::text').getall().strip(),               
             }
 
     async def close_page(self, failure):
