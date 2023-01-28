@@ -30,13 +30,10 @@ class QuotesScrollSpider(scrapy.Spider):
         )
 
     async def parse(self, response):
-        page = response.meta['playwright_page']
-        s  = Selector(text=await page.content())
-        await page.close()
-       
+           
         for q in s.css('.b-card'):
             yield {
-                'builders': q.css('.builder-exp-wrap>.builder-details-wrap ::text').getall().strip(),               
+                'builders': q.css('.builder-exp-wrap>.builder-details-wrap ::text').getall(),               
             }
 
     async def close_page(self, failure):
