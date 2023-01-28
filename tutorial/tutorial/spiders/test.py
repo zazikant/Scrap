@@ -33,7 +33,7 @@ class QuotesScrollSpider(scrapy.Spider):
            
         for q in response.css('.b-card'):
             yield {
-                'builders': q.css('.builder-exp-wrap>.builder-details-wrap ::text').getall(),               
+                'builders': q.css('.builder-exp-wrap>.builder-details-wrap a::text').get().strip(),               
             }
 
     async def close_page(self, failure):
