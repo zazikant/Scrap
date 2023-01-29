@@ -29,7 +29,7 @@ class QuotesScrollSpider(scrapy.Spider):
             errback=self.close_page
         )
 
-    async def parse(self, response):
+    def parse(self, response):
            
         for q in response.css('.b-card'):
             yield {
