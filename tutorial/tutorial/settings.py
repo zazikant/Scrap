@@ -24,7 +24,7 @@ DOWNLOAD_HANDLERS = {
 
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 
-PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 100000
+#PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 100000
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
